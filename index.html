@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/style.css">
     <style>
       html, body {
         margin: 0;
@@ -73,10 +72,11 @@
     <h3>Bake</h3>
     <button id="bake" onclick="onBakeButtonClick()">Go!</button>
     <h3>Response</h3>
-    <pre id="output"></pre>
+    <pre id="output">Your browser does not support web bluetooth or javascript is disabled...</pre>
     <h3>Credits</h3>
     <p>Utilizes the fantastic <a href="https://github.com/sandeepmistry/bleno">bleno</a> module written by <a href="https://github.com/sandeepmistry">Sandeep Mistry</a>.</p>
     <p>Check out more web bluetooth examples <a href="https://googlechrome.github.io/samples/web-bluetooth/">here</a>.</p>
+    <p>Code <a href="https://github.com/strangesast/bleno-web-pizza-example">here</a></p>
     <script>
       var name = 'PizzaSquat';
       var pizzaServiceUuid = '13333333-3333-3333-3333-333333333337';
@@ -203,7 +203,10 @@
       
       // button listeners
       var onStartButtonClick = function(e) {
-        if(ovenServer != null && ovenServer.connected) alert('Already connected...');
+        if(ovenServer != null && ovenServer.connected) {
+          alert('Already connected...');
+          return;
+        }
         return readyOven().then(function() {
           alert('Connection successful!');
         });
@@ -219,6 +222,11 @@
       var log = function(text) {
         outputEl.textContent = text;
       }
+      document.addEventListener('DOMContentLoaded', function() {
+        if(navigator.bluetooth) {
+          outputEl.textContent = 'ready.';
+        }
+      });
     </script>
   </body>
 </html>
