@@ -207,13 +207,16 @@
           alert('Already connected...');
           return;
         }
-        return readyOven().then(function() {
+        readyOven().then(function() {
           alert('Connection successful!');
         });
       };
       
       var onBakeButtonClick = function(e) {
-        if(ovenServer == null || !ovenServer.connected) alert('Not connected!');
+        if(ovenServer == null || !ovenServer.connected) {
+          alert('Not connected!');
+          return;
+        }
         readyCrust(getCrustType())
         .then(() => readyToppings(getToppings()))
         .then(() => bakePizza(getOvenTemperature()))
